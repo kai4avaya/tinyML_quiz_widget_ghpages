@@ -4,17 +4,37 @@ on:
   push:
     branches:
       - dev
+  workflow_dispatch:
 
 jobs:
   build-ubuntu:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
       - name: Setup Quarto
         uses: quarto-dev/quarto-actions/setup@v2
-      - name: Build on Ubuntu
-        run: quarto render --to html
-      - name: stage files
+        with:
+          version: latest
+
+      - name: Install Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y pandoc
+
+      - name: Build Book
+        run: |
+          quarto render
+          # Ensure _book directory exists and has content
+          if [ ! -d "_book" ]; then
+            echo "Error: _book directory not found after build"
+            exit 1
+          fi
+
+      - name: Stage and Push to Dev Repository
         uses: cpina/github-action-push-to-another-repository@v1.7.2
         env:
           SSH_DEPLOY_KEY: ${{ secrets.SSH_DEPLOY_KEY }}
@@ -25,4 +45,17 @@ jobs:
           user-email: khoshnevis.naeem@gmail.com
           target-branch: 'main'
           target-directory: 'docs'
-          commit-message: 'Push dev branch build'
+          commit-message: 'Deploy dev branch build [skip ci]'
+
+      - name: Output Build Status
+        if: always()
+        run: |
+          if [ ${{ job.status }} == 'success' ]; then
+            echo "Build successfully deployed to cs249r_book_dev repository"
+            echo "View the site at https://harvard-edge.github.io/cs249r_book_dev/"
+          else
+            echo "Build or deployment failed. Check the logs above for errors."
+          fi
+
+permissions:
+  contents: read
