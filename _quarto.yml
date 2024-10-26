@@ -17,7 +17,6 @@ book:
       openSidebar: true
 
   search:
-    keyboard-shortcut: ["~", "/"]
     location: sidebar
 
   navbar:
@@ -27,8 +26,6 @@ book:
   favicon: favicon.png
   cover-image: cover-image-transparent.png
   cover-image-alt: "Cover image."
-
-  bread-crumbs: true
 
   sidebar:
     collapse-level: 2
@@ -169,7 +166,6 @@ book:
       - contents/case_studies.qmd
 
 bibliography: 
-  # main
   - contents/introduction/introduction.bib
   - contents/ai_for_good/ai_for_good.bib
   - contents/benchmarking/benchmarking.bib
@@ -199,26 +195,6 @@ crossref:
   appendix-title: "Appendix"
   appendix-delim: ":"
 
-  custom:
-    - kind: float
-      reference-prefix: Lab
-      key: labq
-      latex-env: lab
-
-    - kind: float
-      reference-prefix: Exercise
-      key: exr
-      latex-env: exr
-
-    - kind: float
-      reference-prefix: Video
-      key: vid
-      latex-env: vid
-
-citation: true
-
-license: CC-BY-NC-SA
-
 filters:
   - custom_callout.lua
 
@@ -246,7 +222,6 @@ format:
 
     reference-location: margin
     citation-location: margin
-    sidenote: true  # Enable sidenotes for Tufte style
     linkcolor: "#A51C30"
     urlcolor: "#A51C30"
     highlight-style: github
@@ -254,7 +229,6 @@ format:
     link-external-icon: false
     link-external-newwindow: true
     anchor-sections: true
-    smooth-scroll: false
     citations-hover: false
     footnotes-hover: false
     fig-width: 8
@@ -266,12 +240,6 @@ format:
       text: | 
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-M21L0CBCVN"></script>
         <script src="/scripts/ai_menu/dist/bundle.js" defer></script>
-
-#        <script src="/scripts/welcome/confetti.js" defer></script>
-#        <script src="/scripts/ai_menu/dist/bundle.js" defer></script>
-#        <script src="/scripts/ai_menu/dist/142.bundle.js" defer></script>
-#        <script src="/scripts/ai_menu/dist/384.bundle.js" defer></script>
-#        <script src="/scripts/ai_menu/dist/761.bundle.js" defer></script>
   
     citeproc: true
 
